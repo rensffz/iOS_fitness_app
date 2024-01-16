@@ -201,16 +201,7 @@ struct EditView: View {
                     editing.isSheetPresented.toggle()
                 }
             )
-            Button("OK", action: {
-                
-            })
         }
-    }
-}
-
-struct CounterView: View {
-    var body: some View {
-        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
     }
 }
 

@@ -38,13 +38,34 @@ enum TabbedItems: Int, CaseIterable{
 struct ContentView: View {
     @State var selectedTab = 0
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
+    var body: some View {
+        TabView {
+            CounterView()
+                .tabItem {
+                    Label("Главная", systemImage: "house.fill")
+                }
+            ExercisesView()
+                .tabItem {
+                    Label("Упражнения", systemImage: "dumbbell.fill")
+                }
+            PersonalView()
+                .tabItem {
+                    Label("Профиль", systemImage: "person.crop.circle")
+                }
+        }
+    }
+}
+/*
+struct ContentView: View {
+    @State var selectedTab = 0
+    @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
     
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
                 CounterView()
                     .tag(0)
-                ExcercisesView()
+                ExercisesView()
                     .tag(1)
                 PersonalView()
                     .tag(2)
@@ -72,7 +93,7 @@ struct ContentView: View {
         }
     }
 }
-
+*/
 struct StartView: View {
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
     
