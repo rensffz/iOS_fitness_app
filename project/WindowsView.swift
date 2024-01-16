@@ -143,12 +143,12 @@ struct PersonalView: View {
         }
         
         switch weightUnits {
-        case "kg":
-            weight = userweight
-        case "lb":
-            weight = Int(Double(userweight) / 2.2)
-        default:
-            break
+            case "kg":
+                weight = userweight
+            case "lb":
+                weight = Int(Double(userweight) / 2.2)
+            default:
+                break
         }
         let BMI = Double(Double(weight) / ((Double(height) / 100.0) * (Double(height) / 100.0)))
         bmi = round(BMI / 0.01) * 0.01

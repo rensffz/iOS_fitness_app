@@ -55,45 +55,7 @@ struct ContentView: View {
         }
     }
 }
-/*
-struct ContentView: View {
-    @State var selectedTab = 0
-    @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
-    
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            TabView(selection: $selectedTab) {
-                CounterView()
-                    .tag(0)
-                ExercisesView()
-                    .tag(1)
-                PersonalView()
-                    .tag(2)
-            }
-            .edgesIgnoringSafeArea(.top)
-            .sheet(isPresented: $isFirstLaunch, content: {
-                StartView()
-            })
-            ZStack{
-                HStack{
-                    ForEach((TabbedItems.allCases), id: \.self){ item in
-                        Button{
-                            selectedTab = item.rawValue
-                        } label: {
-                            CustomTabItem(imageName: item.iconName, title: item.title, isActive: (selectedTab == item.rawValue))
-                        }
-                    }
-                }
-                .padding(6)
-            }
-            .frame(height: 70)
-            .background(.purple.opacity(0.2))
-            .cornerRadius(35)
-            .padding(.horizontal, 26)
-        }
-    }
-}
-*/
+
 struct StartView: View {
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
     

@@ -76,7 +76,7 @@ struct ExercisesView: View {
                 .listStyle(PlainListStyle())
 
              .padding()
-                NavigationLink(destination: ExercisesStartView()) { Text("Начать")
+                NavigationLink(destination: ExercisesStartView()) { Text("Перейти к выполнению")
                         .padding()
                         .foregroundColor(.white)
                         .background(Color.blue)
@@ -132,12 +132,12 @@ struct AddExerciseView: View {
 
 struct ExercisesStartView: View {
     @ObservedObject var exercises = Excercises()
-    
+    @Environment(\.presentationMode) var presentationMode
     //let exercises = [("Упражнение 1", 30), ("Упражнение 2", 45), ("Упражнение 3", 60)]
     
     @State private var currentExerciseIndex = 0
     @State private var timerSeconds = 0
-    @State private var isTimerRunning = true
+    @State private var isTimerRunning = false
     @State private var isExercise = true
     @State private var isBreak = false
     @State private var timer: Timer?
@@ -160,10 +160,7 @@ struct ExercisesStartView: View {
                 Text("\(timerSeconds)")
                     .font(.title)
             }
-            //.background(.black)
             .padding()
-            //.clipShape(Circle())
-            //.position(x: 200, y: 200)
 
             Button(action: {
                 startTimer()
@@ -208,11 +205,10 @@ struct ExercisesStartView: View {
         if currentExerciseIndex < exercises.list.count - 1 {
             currentExerciseIndex += 1
         } else {
-            // Все упражнения завершены
             resetTimer()
             currentExerciseIndex = 0
+            presentationMode.wrappedValue.dismiss()
         }
-
         resetTimer()
     }
 
@@ -220,7 +216,7 @@ struct ExercisesStartView: View {
         timer?.invalidate()
         timerSeconds = exercises.list[currentExerciseIndex].duration
         timerProgress = 1.0
-        //isTimerRunning = false
+        isTimerRunning = false
     }
 }
 
