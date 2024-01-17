@@ -91,101 +91,100 @@ struct CounterView: View {
     @State private var spentCalories2: Int = 0
     
     var n = Int.random(in: 0...30000)
-    var k = 0.035 //количество калорий, сжигаемых за 1 шаг на 1 кг веса
+    var k = 0.035
     
     var body: some View {
-        VStack {
+        HStack {
+            Spacer()
             VStack {
-                Button(action: {
-                    isAddingCalories = true
-                }, label: {
-                    Image(systemName: "plus.circle.fill")
-                        .foregroundColor(Color(hex: "#0CA2AF"))
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                        .padding()
-                })
-                Text("Потреблено:   \(calories.consumed.count) ккал")
-                    .padding(.bottom)
-                    .padding(.trailing)
-                HStack {
-                    VStack {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("      Белки:  ")
-                                Text("      Жиры:  ")
-                                Text("      Углеводы:  ")
-                            }
-                            VStack(alignment: .trailing) {
-                                Text("\(calories.consumed.proteins) гр")
-                                Text("\(calories.consumed.fats) гр")
-                                Text("   \(calories.consumed.carbohydrates) гр")
-                            }
-                        }
-                        .padding(.bottom)
-                    }
-                }
-                //.padding()
-                .sheet(isPresented: $isAddingCalories, content: {
-                    AddCaloriesView(calories: calories)
-                })
-            }
-            .frame(minWidth: 300)
-            .background(Color(hex: "#d7e5fc"))
-            .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-            .cornerRadius(10)
-            
-            VStack {
-                Text("Потрачено")
-                    .padding(.top)
-                HStack {
-                    VStack {
-                        Image(systemName: "dumbbell.fill")
-                        Text("A")
-                    }
-                    
-                    VStack {
-                        Image(systemName: "shoeprints.fill")
-                        Text("\(spentCalories2)")
-                    }
-                }
-                .padding()
-            }
-            .frame(minWidth: 300)
-            .background(Color(hex: "#d7e5fc"))
-            .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-            .cornerRadius(10)
-            
-            VStack {
-                Text("Пройдено сегодня:")
-                    .padding(.top)
-                Text("\(n)")
-                ProgressBar(progress: $progress)
-                    .frame(width: 200, height: 20)
-                    .padding()
-            }
-            .frame(minWidth: 300)
-            .background(Color(hex: "#d7e5fc"))
-            .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-            .cornerRadius(10)
-            
-            if recommend {
                 VStack {
-                    RecommendView()
+                    Button(action: {
+                        isAddingCalories = true
+                    }, label: {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(Color(hex: "#424bf5"))
+                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                            .padding()
+                    })
+                    customText("Потреблено:   \(calories.consumed.count) ккал")
+                        .padding(.bottom)
+                        .padding(.trailing)
+                    HStack {
+                        VStack {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    customText("      Белки:  ")
+                                    customText("      Жиры:  ")
+                                    customText("      Углеводы:  ")
+                                }
+                                VStack(alignment: .trailing) {
+                                    customText("\(calories.consumed.proteins) гр")
+                                    customText("\(calories.consumed.fats) гр")
+                                    customText("   \(calories.consumed.carbohydrates) гр")
+                                }
+                            }
+                            .padding(.bottom)
+                        }
+                    }
+                    //.padding()
+                    .sheet(isPresented: $isAddingCalories, content: {
+                        AddCaloriesView(isPresented: $isAddingCalories, calories: calories)
+                    })
                 }
-                .frame(maxWidth: 300)
-                .padding()
-                .background(Color(hex: "#f0dbff"))
+                .frame(minWidth: 300)
+                .background(Color(hex: "#d7e5fc"))
                 .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
                 .cornerRadius(10)
+                
+                VStack {
+                    customText("Потрачено")
+                        .padding(.top)
+                    VStack {
+                        Image(systemName: "shoeprints.fill")
+                            .font(.system(.title))
+                        customText("\(spentCalories2) ккал")
+                    }
+                    .padding()
+                }
+                .frame(minWidth: 300)
+                .background(Color(hex: "#d7e5fc"))
+                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                .cornerRadius(10)
+                
+                VStack {
+                    customText("Пройдено сегодня:")
+                        .padding(.top)
+                    customText("\(n)")
+                        .padding(.top)
+                    ProgressBar(progress: $progress)
+                        .frame(width: 200, height: 20)
+                        .padding()
+                }
+                .frame(minWidth: 300)
+                .background(Color(hex: "#d7e5fc"))
+                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                .cornerRadius(10)
+                
+                if recommend {
+                    VStack {
+                        RecommendView()
+                    }
+                    .frame(maxWidth: 300)
+                    .padding()
+                    .background(Color(hex: "#f0dbff"))
+                    .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                    .cornerRadius(10)
+                }
             }
-        }
-        .onAppear {
-            progress = Float((100 * n) / 10000) / 100.0
-            if progress > 1.0 {
-                progress = 1.0
+            .onAppear {
+                progress = Float((100 * n) / 10000) / 100.0
+                if progress > 1.0 {
+                    progress = 1.0
+                }
+                
+                spentCalories2 = Int(k * Double(n))
             }
-
-            spentCalories2 = Int(k * Double(n))
+            Spacer()
         }
     }
 }
@@ -199,7 +198,6 @@ struct ProgressBar: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    //.opacity(0.8)
                     .foregroundColor(Color(hex: "#FFFFFF"))
 
                 Rectangle()
@@ -216,28 +214,6 @@ struct ProgressBar: View {
         }
     }
 }
-/*
-struct DayMenu: Codable, Hashable {
-    var day: String
-    var menu: [String]
-}
-
-class RecommendMenu {
-    var menu: [DayMenu]
-    
-    init() {
-        menu = [
-        DayMenu(day: "Пн", menu: ["творожная масса с изюмом", "гарнир из гречки с курицей", "морковный салат"]),
-        DayMenu(day: "Вт", menu: ["кусок хлеба, одно яйцо", "перец, тушенный с кабачками и баклажанами", "отварное куриное мясо"]),
-        DayMenu(day: "Ср", menu: ["творожная масса", "щи или другой суп из овощей", "кабачки, тушенные с морковью и болгарским перцем"]),
-        DayMenu(day: "Чт", menu: ["булка из муки с отрубями и творожным сыром", "нарезанные свежие овощи", "вареное яйцо"]),
-        DayMenu(day: "Пт", menu: ["яйцо с помидорами", "свекольник", "отварная говядина"]),
-        DayMenu(day: "Сб", menu: ["овсяная каша на молоке", "гарнир из крупы с куриным филе", "салат из морской капусты или других морепродуктов"]),
-        DayMenu(day: "Вс", menu: ["сырники", "овощной гарнир с рыбой", "нарезанные сезонные фрукты"])
-        ]
-    }
-}
-*/
 
 struct RecommendView: View {
     var texts: [String] = [
@@ -248,11 +224,11 @@ struct RecommendView: View {
     var num: Int = 1
     var body: some View {
         ScrollView {
-            Text("Рекомендации:")
+            customText("Рекомендации:")
                 .padding(.bottom)
             VStack(alignment: .leading) {
                 ForEach(texts, id: \.self) { item in
-                    Text(item)
+                    customText(item)
                         .padding(.bottom)
                 }
             }
@@ -261,6 +237,7 @@ struct RecommendView: View {
 }
 
 struct AddCaloriesView: View {
+    @Binding var isPresented: Bool
     @ObservedObject var calories = Calories()
     @State private var searchText : String = ""
     @ObservedObject var meals = Meals()
@@ -268,7 +245,9 @@ struct AddCaloriesView: View {
         NavigationView {
             VStack {
                 VStack {
+                    
                     TextField("Начните вводить название", text: $searchText)
+                        .font(Font.custom("Comfortaa", size: 17))
                         .padding()
                         .background(Color(hex: "#cfd4d4"))
                         .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
@@ -280,23 +259,25 @@ struct AddCaloriesView: View {
                     ForEach(meals.list, id: \.self) { item in
                         if searchText == "" || (searchText != "" && item.name.lowercased().contains(searchText.lowercased())) {
                             HStack {
-                                Text(item.name)
+                                customText(item.name)
                                 Spacer()
                                 Button(action: {
                                     addToCounter(meal: item)
                                 }, label: {
-                                    Text("Добавить")
+                                    customText("Добавить")
                                         .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                                 })
                             }
                         }
                     }
                 }
+                .background(.gray)
+                .cornerRadius(10)
                 .listStyle(.plain)
                 .padding()
                 VStack {
-                    Text("Не нашли то, что хотели?")
-                    NavigationLink(destination: AddMealView(calories: calories)) { Text("Добавьте своё!")
+                    customText("Не нашли то, что хотели?")
+                    NavigationLink(destination: AddMealView(calories: calories)) { customText("Добавьте своё!")
                             .padding()
                     }
                 }
@@ -304,6 +285,14 @@ struct AddCaloriesView: View {
             }
             //.background(.gray)
             .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+            .navigationBarItems(
+                leading: Button(action: {
+                    isPresented = false
+                }, label: {
+                    Text("Отменить")
+                        .font(Font.custom("Comfortaa", size: 17))
+                })
+            )
         }
     }
     

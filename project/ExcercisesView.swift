@@ -20,6 +20,7 @@ class Excercises: ObservableObject {
     }
 
     init() {
+        let defaultTime: Int = 60
         if let savedData = UserDefaults.standard.data(forKey: "excercises") {
             let decoder = JSONDecoder()
             if let loadedData = try? decoder.decode([Excercise].self, from: savedData) {
@@ -29,12 +30,12 @@ class Excercises: ObservableObject {
         }
         
         list = [
-            Excercise(name: "Махи на боку", duration: 60),
-            Excercise(name: "Книжка", duration: 60),
-            Excercise(name: "Скручивания велосипед", duration: 60),
-            Excercise(name: "Мостик", duration: 60),
-            Excercise(name: "Планка", duration: 60),
-            Excercise(name: "Боковая планка", duration: 60)
+            Excercise(name: "Книжка", duration: defaultTime),
+            Excercise(name: "Скручивания (велосипед)", duration: defaultTime),
+            Excercise(name: "Мостик", duration: defaultTime),
+            Excercise(name: "Планка", duration: defaultTime),
+            Excercise(name: "Боковая планка: левая сторона", duration: defaultTime),
+            Excercise(name: "Боковая планка: правая сторона", duration: defaultTime)
             ]
     }
 
@@ -52,7 +53,6 @@ class Excercises: ObservableObject {
 
 struct ExercisesView: View {
     @ObservedObject var exercises = Excercises()
-    //@State private var exercises: [String] = []
     var body: some View {
         NavigationView {
             VStack {
@@ -68,7 +68,7 @@ struct ExercisesView: View {
 
                 List {
                     ForEach(exercises.list, id: \.self) { item in
-                        Text(item.name)
+                        customText(item.name)
                     }
                     .onDelete(perform: deleteItem)
                 }
@@ -76,11 +76,12 @@ struct ExercisesView: View {
                 .listStyle(PlainListStyle())
 
              .padding()
-                NavigationLink(destination: ExercisesStartView()) { Text("Перейти к выполнению")
+                NavigationLink(destination: ExercisesStartView()) { customText("Перейти к выполнению")
+                        .bold()
                         .padding()
                         .foregroundColor(.white)
                         .background(Color.blue)
-                        .cornerRadius(5)
+                        .cornerRadius(10)
                 }
             }
         }
@@ -104,7 +105,6 @@ struct AddExerciseView: View {
                 Form {
                     Section(header: Text("Добавить упражнение")) {
                         TextField("Введите название", text: $name)
-                            //.padding()
                     }
                     Section(header: Text("Добавить продолжительность")) {
 
@@ -133,7 +133,6 @@ struct AddExerciseView: View {
 struct ExercisesStartView: View {
     @ObservedObject var exercises = Excercises()
     @Environment(\.presentationMode) var presentationMode
-    //let exercises = [("Упражнение 1", 30), ("Упражнение 2", 45), ("Упражнение 3", 60)]
     
     @State private var currentExerciseIndex = 0
     @State private var timerSeconds = 0
@@ -145,8 +144,12 @@ struct ExercisesStartView: View {
 
     var body: some View {
         VStack {
-            Text("Текущее упражнение: \(exercises.list[currentExerciseIndex].name)")
-                .padding()
+            customText("Текущее упражнение:")
+            Text("\(exercises.list[currentExerciseIndex].name)")
+                .font(Font.custom("Comfortaa", size: 20))
+                .bold()
+                .foregroundColor(.orange)
+                .padding(.bottom)
 
             ZStack {
                 Circle()
@@ -155,25 +158,32 @@ struct ExercisesStartView: View {
                     .foregroundColor(.orange)
                     .rotationEffect(.degrees(-90))
                     .animation(.easeInOut(duration: 1.0))
-                    //.frame(width: 200, height: 200)
 
                 Text("\(timerSeconds)")
-                    .font(.title)
+                    .font(Font.custom("Comfortaa", size: 40))
             }
             .padding()
 
             Button(action: {
                 startTimer()
             }) {
-                Text(isTimerRunning ? "Пауза" : "Начать")
+                customText(isTimerRunning ? "Пауза" : "Начать")
+                    .padding()
+                    .bold()
+                    .foregroundColor(.white)
+                    .background(.blue)
+                    .cornerRadius(10)
             }
             .padding()
 
             if currentExerciseIndex < exercises.list.count - 1 {
-                Text("Следующее упражнение: \(exercises.list[currentExerciseIndex + 1].name)")
-                    .padding()
+                customText("Следующее упражнение:")
+                Text("\(exercises.list[currentExerciseIndex + 1].name)")
+                    .font(Font.custom("Comfortaa", size: 20))
+                    .bold()
+                    .foregroundColor(.orange)
             } else {
-                Text("Это последнее упражнение!")
+                customText("Это последнее упражнение!")
                     .padding()
             }
         }
@@ -223,64 +233,3 @@ struct ExercisesStartView: View {
 #Preview {
     ExercisesView()
 }
-
-/**
- struct ExercisesStartView: View {
-     @ObservedObject var exercises = Excercises()
-     
-     @State private var timeRemaining = 60
-     @State private var isTimerRunning = false
-     let timerInterval = 1.0
-     
-     var body: some View {
-         VStack {
-             ZStack {
-                 Circle()
-                     .stroke(lineWidth: 10)
-                     .opacity(0.3)
-                     .foregroundColor(.blue)
-                 Circle()
-                     .trim(from: 0.0, to: CGFloat(timeRemaining) / 60.0)
-                     .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
-                     .foregroundColor(.blue)
-                     .rotationEffect(.degrees(-90))
-                 
-                 Button(action: {
-                     if self.isTimerRunning {
-                         print("going")
-                         self.stopTimer()
-                     } else {
-                         print("no")
-                         self.startTimer()
-                     }
-                 }) {
-                     Text("\(timeRemaining)")
-                         .font(.title)
-                         .foregroundColor(.black)
-                 }
-             }
-             .frame(width: 200, height: 200)
-             Spacer()
-             Text("HW")
-             Spacer()
-         }
-     }
-     
-     private func startTimer() {
-         isTimerRunning = true
-         Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { timer in
-             withAnimation {
-                 if self.timeRemaining > 0 {
-                     self.timeRemaining -= 1
-                 } else {
-                     self.stopTimer()
-                 }
-             }
-         }
-     }
-     
-     private func stopTimer() {
-         isTimerRunning = false
-     }
- }
- */

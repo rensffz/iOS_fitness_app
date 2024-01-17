@@ -7,34 +7,6 @@
 
 import SwiftUI
 
-enum TabbedItems: Int, CaseIterable{
-    case main = 0
-    case excercises
-    case profile
-    
-    var title: String{
-        switch self {
-        case .main:
-            return "Главная"
-        case .excercises:
-            return "Упражнения"
-        case .profile:
-            return "Профиль"
-        }
-    }
-    
-    var iconName: String{
-        switch self {
-        case .main:
-            return "house.fill"
-        case .excercises:
-            return "dumbbell.fill"
-        case .profile:
-            return "person.crop.circle"
-        }
-    }
-}
-
 struct ContentView: View {
     @State var selectedTab = 0
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
@@ -53,6 +25,9 @@ struct ContentView: View {
                     Label("Профиль", systemImage: "person.crop.circle")
                 }
         }
+        .sheet(isPresented: $isFirstLaunch, content: {
+            StartView()
+        })
     }
 }
 
@@ -90,17 +65,21 @@ struct StartView: View {
                 VStack {
                     Spacer()
                     Text("Добро пожаловать!")
+                        .font(Font.custom("Comfortaa", size: 25))
+                        .bold()
                         .padding()
-                    Text("Перед началом работы мы бы хотели узнать немного о Вас:")
+                    customText("Перед началом работы мы бы хотели узнать немного о Вас:")
                         .multilineTextAlignment(.center)
                     TextField("Введите имя", text: $inputs[0])
                         .padding()
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .font(Font.custom("Comfortaa", size: 17))
                     if fields[1] {
                         TextField("Введите возраст", text: $inputs[1])
                             .keyboardType(.numberPad)
                             .padding()
                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(Font.custom("Comfortaa", size: 17))
                     }
                     if fields[2] {
                         HStack {
@@ -108,6 +87,7 @@ struct StartView: View {
                                 .keyboardType(.numberPad)
                                 .padding()
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .font(Font.custom("Comfortaa", size: 17))
                             Picker("Select", selection: $selectedWeight, content: {
                                 ForEach(weights, id: \.self) { option in
                                     Text(option)
@@ -131,7 +111,7 @@ struct StartView: View {
                         }
                     }
                     if fields[4] {
-                        Text("Вы хотите видеть наши рекомендации?")
+                        customText("Вы хотите видеть наши рекомендации?")
                         VStack(alignment: .leading, spacing: 10) {
                             ForEach(options, id: \.self) { option in
                                 RadioButton(
@@ -140,10 +120,11 @@ struct StartView: View {
                                     callback: { selectedOption = option }
                                 )
                             }
+                            .font(Font.custom("Comfortaa", size: 17))
                         }
                     }
                     if nextStep < 5{
-                        Button("Далее") {
+                        Button(action: {
                             let currentStep = nextStep - 1
                             userInput = inputs[currentStep]
                             if userInput != "" || forcedDisplay {
@@ -154,11 +135,15 @@ struct StartView: View {
                             } else {
                                 isAlertPresented = true
                             }
-                        }
+                        }, label: {
+                            customText("Далее")
+                                .foregroundColor(Color(hex: "#0209d6"))
+                                .bold()
+                        })
                         .padding()
                     } else {
                         
-                        Button("Готово") {
+                        Button(action: {
                             isFirstLaunch = false
                             username = inputs[0]
                             userage = inputs[1]
@@ -176,19 +161,21 @@ struct StartView: View {
                             
                             heightUnits = selectedHeight
                             weightUnits = selectedWeight
-                            //show = false
-                        }
+                        }, label: {
+                            customText("Готово")
+                                .foregroundColor(Color(hex: "#0209d6"))
+                                .bold()
+                        })
                         .padding()
                     }
-                    //.background(Color.white)
                     Spacer()
                 }
                 Spacer()
             }
-            .background(Color.red)
+            .background(Color(hex: "#7dc7b1"))
         }
         .padding()
-        .background(Color.red)
+        .background(Color(hex: "#7dc7b1"))
         .cornerRadius(20)
         .alert(isPresented: $isAlertPresented) {
             Alert(
@@ -205,5 +192,5 @@ struct StartView: View {
 }
 
 #Preview {
-    ContentView()
+    StartView()
 }
