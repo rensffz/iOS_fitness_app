@@ -301,8 +301,6 @@ struct AddCaloriesView: View {
         calories.consumed.fats += meal.calories.fats
         calories.consumed.proteins += meal.calories.proteins
         calories.consumed.carbohydrates += meal.calories.carbohydrates
-        
-        print("CALORIES: ", calories.consumed)
     }
 }
 
