@@ -14,8 +14,10 @@
 		5D0217972B40F48F0077093D /* projectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0217962B40F48F0077093D /* projectTests.swift */; };
 		5D0217A12B40F48F0077093D /* projectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0217A02B40F48F0077093D /* projectUITests.swift */; };
 		5D0217A32B40F48F0077093D /* projectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0217A22B40F48F0077093D /* projectUITestsLaunchTests.swift */; };
+		5D6849A62B5609490061AFA9 /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6849A52B5609490061AFA9 /* CounterView.swift */; };
 		5D7F7EAB2B43245A006F5B15 /* Customize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7F7EAA2B43245A006F5B15 /* Customize.swift */; };
 		5D7F7EAD2B433DF4006F5B15 /* WindowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7F7EAC2B433DF4006F5B15 /* WindowsView.swift */; };
+		5DBA70772B5752C80059AF55 /* Comfortaa.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DBA70762B5752C70059AF55 /* Comfortaa.ttf */; };
 		5DE783FA2B4770860048E6E8 /* ExcercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE783F92B4770860048E6E8 /* ExcercisesView.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,8 +49,11 @@
 		5D02179C2B40F48F0077093D /* projectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = projectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D0217A02B40F48F0077093D /* projectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = projectUITests.swift; sourceTree = "<group>"; };
 		5D0217A22B40F48F0077093D /* projectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = projectUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5D6849A52B5609490061AFA9 /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
 		5D7F7EAA2B43245A006F5B15 /* Customize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customize.swift; sourceTree = "<group>"; };
 		5D7F7EAC2B433DF4006F5B15 /* WindowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsView.swift; sourceTree = "<group>"; };
+		5DBA70742B57520A0059AF55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5DBA70762B5752C70059AF55 /* Comfortaa.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Comfortaa.ttf; path = project/Comfortaa/Comfortaa.ttf; sourceTree = SOURCE_ROOT; };
 		5DE783F92B4770860048E6E8 /* ExcercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcercisesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +105,8 @@
 		5D0217842B40F48D0077093D /* project */ = {
 			isa = PBXGroup;
 			children = (
+				5DBA70752B5752B70059AF55 /* Fonts */,
+				5DBA70742B57520A0059AF55 /* Info.plist */,
 				5D0217852B40F48D0077093D /* projectApp.swift */,
 				5D0217872B40F48D0077093D /* ContentView.swift */,
 				5D0217892B40F48E0077093D /* Assets.xcassets */,
@@ -107,6 +114,7 @@
 				5D7F7EAA2B43245A006F5B15 /* Customize.swift */,
 				5D7F7EAC2B433DF4006F5B15 /* WindowsView.swift */,
 				5DE783F92B4770860048E6E8 /* ExcercisesView.swift */,
+				5D6849A52B5609490061AFA9 /* CounterView.swift */,
 			);
 			path = project;
 			sourceTree = "<group>";
@@ -134,6 +142,14 @@
 				5D0217A22B40F48F0077093D /* projectUITestsLaunchTests.swift */,
 			);
 			path = projectUITests;
+			sourceTree = "<group>";
+		};
+		5DBA70752B5752B70059AF55 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5DBA70762B5752C70059AF55 /* Comfortaa.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D02178D2B40F48E0077093D /* Preview Assets.xcassets in Resources */,
+				5DBA70772B5752C80059AF55 /* Comfortaa.ttf in Resources */,
 				5D02178A2B40F48E0077093D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,6 +288,7 @@
 				5D0217862B40F48D0077093D /* projectApp.swift in Sources */,
 				5D7F7EAD2B433DF4006F5B15 /* WindowsView.swift in Sources */,
 				5DE783FA2B4770860048E6E8 /* ExcercisesView.swift in Sources */,
+				5D6849A62B5609490061AFA9 /* CounterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +455,7 @@
 				DEVELOPMENT_TEAM = Q2AP78H3Q5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -466,6 +485,7 @@
 				DEVELOPMENT_TEAM = Q2AP78H3Q5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
